@@ -123,7 +123,8 @@ model_version = get_latest_model_version(model_name)
 model_uri = f'models:/{model_name}/{model_version}'
 print(f"Fetching model from: {model_uri}")
 model = mlflow.pyfunc.load_model(model_uri)
-vectorizer = pickle.load(open('models/vectorizer.pkl', 'rb'))
+vectorizer_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../models/vectorizer.pkl'))
+vectorizer = pickle.load(open(vectorizer_path, 'rb'))
 
 # Routes
 @app.route("/")
