@@ -1,19 +1,33 @@
 import boto3
 import pandas as pd
 import logging
+import os
+from dotenv import load_dotenv
 from src.logger import logging
 from io import StringIO
+
+# Load environment variables from .env file
+load_dotenv(os.path.join(os.path.dirname(__file__), '../../.env'))
 
 # # Configure logging
 # logging.basicConfig(level=logging.INFO)
 # logger = logging.getLogger(__name__)
 
 class s3_operations:
-    def __init__(self, bucket_name, aws_access_key, aws_secret_key, region_name="us-east-1"):
+    def __init__(self, bucket_name, aws_access_key=None, aws_secret_key=None, region_name="us-east-1"):
         """
         Initialize the s3_operations class with AWS credentials and S3 bucket details.
+        If credentials are not provided, they are loaded automatically from the .env file.
         """
         self.bucket_name = bucket_name
+
+        # Retrieve keys from parameters or fallback to .env / OS environment variables
+        aws_access_key = aws_access_key or os.getenv("secret-key") or os.getenv("AWS_ACCESS_KEY_ID")
+        aws_secret_key = aws_secret_key or os.getenv("access-key") or os.getenv("AWS_SECRET_ACCESS_KEY")
+
+        if not aws_access_key or not aws_secret_key:
+            raise ValueError("AWS credentials (access key and secret key) could not be found in .env or environment variables.")
+
         self.s3_client = boto3.client(
             's3',
             aws_access_key_id=aws_access_key,
