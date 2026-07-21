@@ -1,5 +1,3 @@
-# updated dvc.yaml
-
 stages:
   data_ingestion:
     cmd: python src/data/data_ingestion.py
@@ -45,7 +43,7 @@ stages:
     metrics:
       - reports/metrics.json
     outs:
-      - reports/experiment_info.json # Add the model_info.json file as an output
+      - reports/experiment_info.json 
 
   model_registration:
     cmd: python src/model/register_model.py

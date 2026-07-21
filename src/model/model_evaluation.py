@@ -16,7 +16,11 @@ import dagshub
 from src.logger import logging
 
 
-# Below code block is for production use
+# Below code block is for local use
+# -------------------------------------------------------------------------------------
+# mlflow.set_tracking_uri('https://dagshub.com/bhawsarathrva/Sentient-Analysis-MLOPS.mlflow')
+# dagshub.init(repo_owner='bhawsarathrva', repo_name='Sentiment-Analysis-MLOPS', mlflow=True)
+# -------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------
 # Set up DagsHub credentials for MLflow tracking
 dagshub_token = os.getenv("CAPSTONE_TEST") or os.getenv("dagshub_token")

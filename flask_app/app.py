@@ -68,13 +68,6 @@ def normalize_text(text):
     text = lemmatization(text)
 
     return text
-
-# Below code block is for local use
-# -------------------------------------------------------------------------------------
-# mlflow.set_tracking_uri('https://dagshub.com/vikashdas770/YT-Capstone-Project.mlflow')
-# dagshub.init(repo_owner='vikashdas770', repo_name='YT-Capstone-Project', mlflow=True)
-# -------------------------------------------------------------------------------------
-
 # Below code block is for production use
 # -------------------------------------------------------------------------------------
 # Set up DagsHub credentials for MLflow tracking
@@ -165,5 +158,4 @@ def metrics():
     return generate_latest(registry), 200, {"Content-Type": CONTENT_TYPE_LATEST}
 
 if __name__ == "__main__":
-    # app.run(debug=True) # for local use
-    app.run(debug=True, host="0.0.0.0", port=5000)  # Accessible from outside Docker
+    app.run(debug=True, host="0.0.0.0", port=5000)
