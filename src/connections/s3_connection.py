@@ -14,7 +14,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '../../.env'))
 # logger = logging.getLogger(__name__)
 
 class s3_operations:
-    def __init__(self, bucket_name, aws_access_key=None, aws_secret_key=None, region_name="us-east-1"):
+    def __init__(self, bucket_name="mlopsnlp26", aws_access_key=None, aws_secret_key=None, region_name="ap-southeast-2"):
         """
         Initialize the s3_operations class with AWS credentials and S3 bucket details.
         If credentials are not provided, they are loaded automatically from the .env file.
