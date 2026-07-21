@@ -26,15 +26,16 @@ class s3_operations:
         aws_secret_key = aws_secret_key or os.getenv("access-key") or os.getenv("AWS_SECRET_ACCESS_KEY")
 
         if not aws_access_key or not aws_secret_key:
-            raise ValueError("AWS credentials (access key and secret key) could not be found in .env or environment variables.")
-
-        self.s3_client = boto3.client(
-            's3',
-            aws_access_key_id=aws_access_key,
-            aws_secret_access_key=aws_secret_key,
-            region_name=region_name
-        )
-        logging.info("Data Ingestion from S3 bucket initialized")
+            logging.warning("AWS credentials (access key and secret key) could not be found in .env or environment variables. S3 operations will be disabled.")
+            self.s3_client = None
+        else:
+            self.s3_client = boto3.client(
+                's3',
+                aws_access_key_id=aws_access_key,
+                aws_secret_access_key=aws_secret_key,
+                region_name=region_name
+            )
+            logging.info("Data Ingestion from S3 bucket initialized")
 
     def fetch_file_from_s3(self, file_key):
         """
@@ -42,6 +43,10 @@ class s3_operations:
         :param file_key: S3 file path (e.g., 'data/data.csv')
         :return: Pandas DataFrame
         """
+        if self.s3_client is None:
+            logging.warning("S3 client is not initialized due to missing credentials. Skipping S3 fetch.")
+            return None
+
         try:
             logging.info(f"Fetching file '{file_key}' from S3 bucket '{self.bucket_name}'...")
             obj = self.s3_client.get_object(Bucket=self.bucket_name, Key=file_key)

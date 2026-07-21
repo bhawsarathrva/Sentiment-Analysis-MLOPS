@@ -84,10 +84,15 @@ def main():
         test_size = 0.2
         
         df = load_data(data_url='https://raw.githubusercontent.com/vikashishere/Datasets/refs/heads/main/data.csv')
-        secret_key = os.getenv("secret-key")
-        access_key = os.getenv("access-key")
-        s3 = s3_connection.s3_operations("mlopsnlp26", secret_key, access_key)
-        df = s3.fetch_file_from_s3("data.csv")
+        try:
+            secret_key = os.getenv("secret-key") or os.getenv("AWS_ACCESS_KEY_ID")
+            access_key = os.getenv("access-key") or os.getenv("AWS_SECRET_ACCESS_KEY")
+            s3 = s3_connection.s3_operations("mlopsnlp26", secret_key, access_key)
+            s3_df = s3.fetch_file_from_s3("data.csv")
+            if s3_df is not None:
+                df = s3_df
+        except Exception as e:
+            logging.warning("S3 fetch failed (%s). Proceeding with data from fallback URL.", e)
 
 
 
