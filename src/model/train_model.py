@@ -55,7 +55,7 @@ def save_model(model, file_path: str) -> None:
 def main():
     try:
         # Source train set paths
-        train_data_path = './data/processed/train_bow.csv'
+        train_data_path = './dataset/processed/train_bow.csv'
         model_output_path = 'models/model.pkl'
 
         train_data = load_data(train_data_path)

@@ -113,7 +113,7 @@ def main():
     with mlflow.start_run() as run:  # Start an MLflow run
         try:
             clf = load_model('./models/model.pkl')
-            test_data = load_data('./data/processed/test_bow.csv')
+            test_data = load_data('./dataset/processed/test_bow.csv')
             
             X_test = test_data.iloc[:, :-1].values
             y_test = test_data.iloc[:, -1].values

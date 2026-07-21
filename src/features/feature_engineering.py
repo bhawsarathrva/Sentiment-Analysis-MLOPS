@@ -86,13 +86,13 @@ def main():
         max_features = params['feature_engineering']['max_features']
         # max_features = 20
 
-        train_data = load_data('./data/interim/train_processed.csv')
-        test_data = load_data('./data/interim/test_processed.csv')
+        train_data = load_data('./dataset/interim/train_processed.csv')
+        test_data = load_data('./dataset/interim/test_processed.csv')
 
         train_df, test_df = apply_bow(train_data, test_data, max_features)
 
-        save_data(train_df, os.path.join("./data", "processed", "train_bow.csv"))
-        save_data(test_df, os.path.join("./data", "processed", "test_bow.csv"))
+        save_data(train_df, os.path.join("./dataset", "processed", "train_bow.csv"))
+        save_data(test_df, os.path.join("./dataset", "processed", "test_bow.csv"))
     except Exception as e:
         logging.error('Failed to complete the feature engineering process: %s', e)
         print(f"Error: {e}")
