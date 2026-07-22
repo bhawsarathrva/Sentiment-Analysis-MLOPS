@@ -8,31 +8,6 @@ This repository contains a production-grade, end-to-end Machine Learning Operati
 
 The system is designed as a modular pipeline where data, models, code, and infrastructure are fully versioned and monitored.
 
-```mermaid
-flowchart TD
-    subgraph Data & Pipeline (DVC)
-        A[Raw Data URL] -->|data_ingestion.py| B(data/raw)
-        B -->|data_preprocessing.py| C(data/interim)
-        C -->|feature_engineering.py| D(data/processed & vectorizer.pkl)
-        D -->|model_building.py| E(models/model.pkl)
-        E -->|model_evaluation.py| F(reports/metrics.json)
-        F -->|register_model.py| G[(MLflow Registry / DagsHub)]
-    end
-
-    subgraph CI/CD (GitHub Actions)
-        H[Code Push] -->|Triggers| I[Run DVC Repro & Tests]
-        I -->|Success| J[Build & Push Docker Image]
-        J -->|Push| K[(AWS ECR)]
-        K -->|Deploy| L[AWS EKS Cluster]
-    end
-
-    subgraph Serving & Monitoring
-        L -->|Hosts| M[Flask Web App]
-        M -->|Exposes /metrics| N[Prometheus Scraper]
-        N -->|Feeds| O[Grafana Dashboards]
-    end
-```
-
 ---
 
 ## 📁 Directory Structure

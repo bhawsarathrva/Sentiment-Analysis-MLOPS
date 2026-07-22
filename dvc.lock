@@ -11,7 +11,7 @@ stages:
       params.yaml:
         data_ingestion.test_size: 0.25
     outs:
-    - path: data/raw
+    - path: dataset/raw
       hash: md5
       md5: 04a4aefc973742ec08bf2a024194608b.dir
       size: 634167
@@ -19,7 +19,7 @@ stages:
   data_preprocessing:
     cmd: python src/data/data_preprocessing.py
     deps:
-    - path: data/raw
+    - path: dataset/raw
       hash: md5
       md5: 04a4aefc973742ec08bf2a024194608b.dir
       size: 634167
@@ -29,7 +29,7 @@ stages:
       md5: ce7a76f4f560df73f092a26280fb66b5
       size: 2713
     outs:
-    - path: data/interim
+    - path: dataset/interim
       hash: md5
       md5: bad6861b94e084b3ef431ce6be3703a0.dir
       size: 391330
@@ -37,7 +37,7 @@ stages:
   feature_engineering:
     cmd: python src/features/feature_engineering.py
     deps:
-    - path: data/interim
+    - path: dataset/interim
       hash: md5
       md5: bad6861b94e084b3ef431ce6be3703a0.dir
       size: 391330
@@ -50,7 +50,7 @@ stages:
       params.yaml:
         feature_engineering.max_features: 50
     outs:
-    - path: data/processed
+    - path: dataset/processed
       hash: md5
       md5: 045fb155d0f54e994df06da24d07ebd8.dir
       size: 51890
@@ -62,7 +62,7 @@ stages:
   model_building:
     cmd: python src/model/model_building.py
     deps:
-    - path: data/processed
+    - path: dataset/processed
       hash: md5
       md5: 045fb155d0f54e994df06da24d07ebd8.dir
       size: 51890
